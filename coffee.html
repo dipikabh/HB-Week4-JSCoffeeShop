@@ -70,29 +70,53 @@
     // coffeeImage.addEventListener('click', makeCoffee);
     // setTimeout(makeCoffeeMug, 1500);
     // setTimeout(makeCoffeeBeans, 2500);
+    "use strict";
+    let revenueMessage;
 
+    let drinksOrdered = [];
+    let coffeeImage =  $("img#coffee-image");
+    coffeeImage.attr('src', 'static/coffee_beans.jpg');
 
-    $("img#coffee-image").attr('src', 'static/coffee_beans.jpg');
-
-    function makeCoffee() {
-        $("img#coffee-image").attr('src', 'static/coffee_machine.jpg');
+    function makeCoffee(drinkType) {
+        coffeeImage.attr('src', 'static/coffee_machine.jpg');
         setTimeout(makeCoffeeMug, 1500);
         setTimeout(makeCoffeeBeans, 2500);
+
+        drinksOrdered.push(drinkType);
+
+        console.log(drinksOrdered);
+
+        revenueMessage = `Your total cost: ${revenue(drinksOrdered)}`;
+        console.log(revenueMessage);
+
     }
 
     function makeCoffeeMug() {
-       $("img#coffee-image").attr('src', 'static/coffee_mug.jpg');
+       coffeeImage.attr('src', 'static/coffee_mug.jpg');
     }
 
     function makeCoffeeBeans() {
-        $("img#coffee-image").attr('src', 'static/coffee_beans.jpg');
+        coffeeImage.attr('src', 'static/coffee_beans.jpg');
     }
 
-    $("img#coffee-image").on('click', makeCoffee);
+    // Anonymous Inline Function:
+    coffeeImage.on('click', function () { makeCoffee("brew");});
+    $("button#espresso").on('click', function () { makeCoffee("espresso");});
+    $("button#latte").on('click', function () { makeCoffee("latte");});
+    $("button#hot-chocolate").on('click', function () { makeCoffee("hot-chocolate");});
+    // Arrow Function: $("img#coffee-image").on('click', ( () => makeCoffee("brew")));
     // setTimeout(makeCoffeeMug, 1500);
     // setTimeout(makeCoffeeBeans, 2500);
 
-    let revenueMessage;
+
+    let total = 0;
+
+    function revenue(drinksOrdered) {
+        for (let drink of drinksOrdered) {
+            total + prices[drink]
+        }
+        return total
+    }
 
     // use this JavaScript object in further study step
 
@@ -100,7 +124,7 @@
         "brew": 2.05,
         "espresso": 3.25,
         "latte": 4.15,
-        "hot chocolate": 2.50
+        "hot-chocolate": 2.50
     };
 
 
